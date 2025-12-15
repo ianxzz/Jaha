@@ -1,0 +1,1403 @@
+local vu1 = loadstring(Game:HttpGet("https://raw.githubusercontent.com/discoart/FluentPlus/refs/heads/main/Beta.lua", true))()
+local v2 = vu1
+local v3 = vu1.CreateWindow(v2, {
+    Title = "Nokt Hub - Piggy",
+    SubTitle = "by Noktscript21",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = false,
+    Theme = "Darker",
+    Icon = "geist:logo-open-ai",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+v3.UserInfo = true
+v3.UserInfoTop = false
+v3.UserInfoTitle = game.Players.LocalPlayer.DisplayName
+v3.UserInfoSubtitle = "User"
+v3.UserInfoSubtitleColor = Color3.fromRGB(71, 123, 255)
+local v4 = vu1
+vu1.CreateMinimizer(v4, {
+    Icon = "star",
+    Size = UDim2.fromOffset(44, 44),
+    Position = UDim2.new(0, 320, 0, 24),
+    Acrylic = true,
+    Corner = 10,
+    Transparency = 1,
+    Draggable = true,
+    Visible = true
+})
+local v5 = {
+    Main = v3:AddTab({
+        Title = "Main",
+        Icon = "home"
+    }),
+    Visual = v3:AddTab({
+        Title = "Visual",
+        Icon = "eye"
+    }),
+    Game = v3:AddTab({
+        Title = "Game",
+        Icon = "joystick"
+    }),
+    ItemsGrabber = v3:AddTab({
+        Title = "Items Grabber",
+        Icon = "package-search"
+    }),
+    Killer = v3:AddTab({
+        Title = "Target Killer",
+        Icon = "skull"
+    }),
+    Update = v3:AddTab({
+        Title = "Update",
+        Icon = "info"
+    }),
+    Credits = v3:AddTab({
+        Title = "Credits",
+        Icon = "star"
+    }),
+    Settings = v3:AddTab({
+        Title = "Settings",
+        Icon = "settings"
+    })
+}
+local vu6 = vu1.Options
+local vu7 = game:GetService("RunService")
+local vu8 = game:GetService("Players").LocalPlayer
+local v9 = vu1
+vu1.Notify(v9, {
+    Title = "Welcome",
+    Content = "Made by Noktscript21! I hope you enjoy it!",
+    Icon = "star",
+    Duration = 10
+})
+print("Nokt Hub - Loaded | Made by: Noktscript21")
+print("All the content of the script was made by StarHackScripts")
+local function vu14(p10, p11, p12)
+    if not p10:FindFirstChild("StarHighlight_" .. p12) and (p10 ~= vu8.Character or not ignoreSelf) then
+        local v13 = Instance.new("Highlight")
+        v13.Name = "StarHighlight_" .. p12
+        v13.Adornee = p10
+        v13.FillColor = p11
+        v13.FillTransparency = 0.5
+        v13.OutlineTransparency = 1
+        v13.Parent = p10
+    end
+end
+local function vu21(p15)
+    local v16, v17, v18 = pairs(workspace:GetDescendants())
+    while true do
+        local v19
+        v18, v19 = v16(v17, v18)
+        if v18 == nil then
+            break
+        end
+        local v20 = v19:FindFirstChild("StarHighlight_" .. p15)
+        if v20 then
+            v20:Destroy()
+        end
+    end
+end
+local vu22 = false
+local function vu25(p23)
+    local v24 = vu22
+    if v24 then
+        v24 = p23 == vu8.Character
+    end
+    return v24
+end
+local function vu33(p26, p27, p28)
+    local v29, v30, v31 = pairs(workspace:GetChildren())
+    while true do
+        local v32
+        v31, v32 = v29(v30, v31)
+        if v31 == nil then
+            break
+        end
+        if v32:FindFirstChild("Humanoid") and (not vu25(v32) and p28(v32)) then
+            vu14(v32, p27, p26)
+        end
+    end
+end
+task.spawn(function()
+    while true do
+        task.wait(5)
+        if vu6.PiggyESPPlayer and vu6.PiggyESPPlayer.Value then
+            vu33("EnemyPlayer", Color3.fromRGB(255, 0, 0), function(p34)
+                local v35 = p34:FindFirstChild("Enemy")
+                if v35 then
+                    v35 = p34.Enemy.Value == true
+                end
+                return v35
+            end)
+        end
+        if vu6.SurvivorESP and vu6.SurvivorESP.Value then
+            vu33("SurvivorPlayer", Color3.fromRGB(0, 255, 0), function(p36)
+                return (not p36:FindFirstChild("Enemy") or p36.Enemy.Value == false) and true or false
+            end)
+        end
+        if vu6.FriendlyNPC and vu6.FriendlyNPC.Value then
+            local v37, v38, v39 = pairs(workspace:GetChildren())
+            while true do
+                local v40
+                v39, v40 = v37(v38, v39)
+                if v39 == nil then
+                    break
+                end
+                local v41, v42, v43 = pairs(v40:GetChildren())
+                while true do
+                    local v44
+                    v43, v44 = v41(v42, v43)
+                    if v43 == nil then
+                        break
+                    end
+                    if v44:IsA("Folder") then
+                        local v45, v46, v47 = pairs(v44:GetChildren())
+                        while true do
+                            local v48
+                            v47, v48 = v45(v46, v47)
+                            if v47 == nil then
+                                break
+                            end
+                            if v48:FindFirstChild("Humanoid") and (v48:FindFirstChild("NPCScript") and v48:FindFirstChild("ToolRequired")) then
+                                vu14(v48, Color3.fromRGB(255, 255, 0), "FriendlyNPC")
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        if vu6.UnfriendlyNPC and vu6.UnfriendlyNPC.Value then
+            local v49, v50, v51 = pairs(workspace:GetChildren())
+            while true do
+                local v52
+                v51, v52 = v49(v50, v51)
+                if v51 == nil then
+                    break
+                end
+                local v53, v54, v55 = pairs(v52:GetChildren())
+                while true do
+                    local v56
+                    v55, v56 = v53(v54, v55)
+                    if v55 == nil then
+                        break
+                    end
+                    if v56:IsA("Folder") then
+                        local v57, v58, v59 = pairs(v56:GetChildren())
+                        while true do
+                            local v60
+                            v59, v60 = v57(v58, v59)
+                            if v59 == nil then
+                                break
+                            end
+                            if v60:FindFirstChild("Humanoid") and (v60:FindFirstChild("NPCScript") and (v60:FindFirstChild("Enemy") and (v60.Enemy.Value == true and not v60:FindFirstChild("ToolRequired")))) then
+                                vu14(v60, Color3.fromRGB(255, 120, 0), "UnfriendlyNPC")
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        local v61 = vu6.PiggyESPBot and vu6.PiggyESPBot.Value and workspace:FindFirstChild("PiggyNPC")
+        if v61 then
+            local v62, v63, v64 = pairs(v61:GetChildren())
+            while true do
+                local v65
+                v64, v65 = v62(v63, v64)
+                if v64 == nil then
+                    break
+                end
+                vu14(v65, Color3.fromRGB(0, 120, 255), "PiggyBot")
+            end
+        end
+    end
+end)
+local vu66 = 16
+local vu67 = false
+v5.Main:AddInput("WalkspeedInput", {
+    Title = "Walkspeed",
+    Default = "",
+    Placeholder = "Enter the amount of speed you want here.",
+    Numeric = true,
+    Finished = true,
+    Callback = function(p68)
+        local v69 = tonumber(p68)
+        local v70 = vu8.Character
+        if v70 then
+            v70 = vu8.Character:FindFirstChildOfClass("Humanoid")
+        end
+        if v69 and v70 then
+            vu66 = v69
+            v70.WalkSpeed = vu66
+        end
+    end
+})
+v5.Main:AddToggle("AntiSlowToggle", {
+    Title = "Anti Slow",
+    Default = false
+})
+task.spawn(function()
+    while true do
+        while true do
+            task.wait(0.1)
+            if vu6.AntiSlowToggle and vu6.AntiSlowToggle.Value then
+                break
+            end
+            vu67 = false
+        end
+        vu67 = true
+        local v71 = vu8.Character
+        if v71 then
+            v71 = vu8.Character:FindFirstChildOfClass("Humanoid")
+        end
+        if v71 and v71.WalkSpeed ~= vu66 then
+            v71.WalkSpeed = vu66
+        end
+    end
+end)
+v5.Main:AddToggle("NoclipToggle", {
+    Title = "Noclip",
+    Default = false
+})
+local vu72 = nil
+local vu73 = {}
+vu6.NoclipToggle:OnChanged(function(p74)
+    local v75 = vu8.Character
+    if v75 then
+        if p74 then
+            vu73 = {}
+            local v76, v77, v78 = ipairs(v75:GetDescendants())
+            while true do
+                local v79
+                v78, v79 = v76(v77, v78)
+                if v78 == nil then
+                    break
+                end
+                if v79:IsA("BasePart") then
+                    vu73[v79] = v79.CanCollide
+                end
+            end
+            vu72 = vu7.Stepped:Connect(function()
+                local v80 = vu8.Character
+                if v80 then
+                    local v81, v82, v83 = ipairs(v80:GetDescendants())
+                    while true do
+                        local v84
+                        v83, v84 = v81(v82, v83)
+                        if v83 == nil then
+                            break
+                        end
+                        if v84:IsA("BasePart") then
+                            v84.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            if vu72 then
+                vu72:Disconnect()
+                vu72 = nil
+            end
+            local v85, v86, v87 = pairs(vu73)
+            while true do
+                local v88
+                v87, v88 = v85(v86, v87)
+                if v87 == nil then
+                    break
+                end
+                if v87 and v87:IsDescendantOf(vu8.Character) then
+                    v87.CanCollide = v88
+                end
+            end
+            vu73 = {}
+        end
+    end
+end)
+v5.Visual:AddToggle("PiggyESPPlayer", {
+    Title = "Piggy ESP (Player)",
+    Default = false
+})
+vu6.PiggyESPPlayer:OnChanged(function(p89)
+    if not p89 then
+        return vu21("EnemyPlayer")
+    end
+    vu33("EnemyPlayer", Color3.fromRGB(255, 0, 0), function(p90)
+        local v91 = p90:FindFirstChild("Enemy")
+        if v91 then
+            v91 = p90.Enemy.Value == true
+        end
+        return v91
+    end)
+end)
+v5.Visual:AddToggle("PiggyESPBot", {
+    Title = "Piggy ESP (Bot)",
+    Default = false
+})
+vu6.PiggyESPBot:OnChanged(function(p92)
+    if not p92 then
+        return vu21("PiggyBot")
+    end
+    local v93 = workspace:FindFirstChild("PiggyNPC")
+    if v93 then
+        local v94, v95, v96 = pairs(v93:GetChildren())
+        while true do
+            local v97
+            v96, v97 = v94(v95, v96)
+            if v96 == nil then
+                break
+            end
+            vu14(v97, Color3.fromRGB(0, 120, 255), "PiggyBot")
+        end
+    end
+end)
+v5.Visual:AddToggle("FriendlyNPC", {
+    Title = "Friendly NPC ESP",
+    Default = false
+})
+vu6.FriendlyNPC:OnChanged(function(_)
+end)
+v5.Visual:AddToggle("UnfriendlyNPC", {
+    Title = "Unfriendly NPC ESP",
+    Default = false
+})
+vu6.UnfriendlyNPC:OnChanged(function(_)
+end)
+v5.Visual:AddToggle("SurvivorESP", {
+    Title = "Survivors (Players)",
+    Default = false
+})
+vu6.SurvivorESP:OnChanged(function(p98)
+    if not p98 then
+        return vu21("SurvivorPlayer")
+    end
+    vu33("SurvivorPlayer", Color3.fromRGB(0, 255, 0), function(p99)
+        return (not p99:FindFirstChild("Enemy") or p99.Enemy.Value == false) and true or false
+    end)
+end)
+local vu100 = false
+v5.Visual:AddToggle("TraitorESP", {
+    Title = "Traitor ESP",
+    Default = false
+})
+vu6.TraitorESP:OnChanged(function(p101)
+    vu100 = p101
+    if not p101 then
+        vu21("TraitorESP")
+    end
+end)
+task.spawn(function()
+    while true do
+        repeat
+            task.wait(2)
+        until vu100
+        local v102 = workspace:FindFirstChild("GameFolder")
+        if v102 and (v102:FindFirstChild("TraitorEnabled") and v102.TraitorEnabled.Value) then
+            local v103, v104, v105 = ipairs(workspace:GetChildren())
+            while true do
+                local v106
+                v105, v106 = v103(v104, v105)
+                if v105 == nil then
+                    break
+                end
+                if v106:IsA("Model") and (v106:FindFirstChild("Humanoid") and v106:FindFirstChild("Traitor")) and (v106.Traitor:IsA("BoolValue") and v106.Traitor.Value == true) then
+                    vu14(v106, Color3.new(165, 165, 203), "TraitorESP")
+                end
+            end
+        else
+            vu21("TraitorESP")
+        end
+    end
+end)
+v5.Visual:AddButton({
+    Title = "UnESP Yourself",
+    Description = "Remove your own ESP highlight",
+    Callback = function()
+        vu22 = true
+        local v107, v108, v109 = ipairs({
+            "EnemyPlayer",
+            "SurvivorPlayer",
+            "FriendlyNPC",
+            "UnfriendlyNPC",
+            "PiggyBot"
+        })
+        while true do
+            local v110
+            v109, v110 = v107(v108, v109)
+            if v109 == nil then
+                break
+            end
+            local v111 = vu8.Character
+            if v111 then
+                v111 = vu8.Character:FindFirstChild("StarHighlight_" .. v110)
+            end
+            if v111 then
+                v111:Destroy()
+            end
+        end
+    end
+})
+local vu112 = {}
+local vu113 = {}
+local vu114 = 1000
+v5.Game:AddToggle("TraceESP", {
+    Title = "Trace ESP",
+    Default = false
+})
+vu6.TraceESP:OnChanged(function(p115)
+    if p115 then
+        vu112.update = vu7.RenderStepped:Connect(function()
+            local v116, v117, v118 = ipairs(vu113)
+            while true do
+                local v119
+                v118, v119 = v116(v117, v118)
+                if v118 == nil then
+                    break
+                end
+                v119.Visible = false
+            end
+            vu113 = {}
+            local v120, v121, v122 = ipairs(workspace:GetDescendants())
+            while true do
+                local v123
+                v122, v123 = v120(v121, v122)
+                if v122 == nil then
+                    break
+                end
+                if v123:FindFirstChild("Humanoid") and (v123:FindFirstChild("HumanoidRootPart") and v123 ~= vu8.Character) then
+                    local v124 = nil
+                    if v123:FindFirstChild("Enemy") and v123.Enemy.Value == true then
+                        v124 = Color3.fromRGB(255, 0, 0)
+                    elseif v123:FindFirstChild("Enemy") and v123.Enemy.Value ~= false then
+                        if v123:FindFirstChild("ToolRequired") then
+                            v124 = Color3.fromRGB(255, 255, 0)
+                        elseif v123:FindFirstChild("Enemy") and (v123.Enemy.Value == true and not v123:FindFirstChild("ToolRequired")) then
+                            v124 = Color3.fromRGB(255, 120, 0)
+                        end
+                    else
+                        v124 = Color3.fromRGB(0, 255, 0)
+                    end
+                    local v125 = workspace:FindFirstChild("PiggyNPC")
+                    if v125 and v125:IsAncestorOf(v123) then
+                        v124 = Color3.fromRGB(0, 120, 255)
+                    end
+                    if v124 then
+                        local v126 = v123.HumanoidRootPart
+                        local v127 = vu8.Character
+                        if v127 then
+                            v127 = vu8.Character:FindFirstChild("HumanoidRootPart")
+                        end
+                        if v127 and (v127.Position - v126.Position).Magnitude <= vu114 then
+                            local v128 = workspace.CurrentCamera:WorldToViewportPoint(v126.Position)
+                            local v129 = Drawing.new("Line")
+                            v129.Visible = true
+                            v129.Color = v124
+                            v129.Thickness = 2
+                            v129.From = Vector2.new(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2)
+                            v129.To = Vector2.new(v128.X, v128.Y)
+                            local v130 = (v129.To - v129.From).Unit
+                            local v131 = v129.To - v130 * 15
+                            local v132 = 8
+                            local v133 = Drawing.new("Triangle")
+                            v133.Visible = true
+                            v133.Filled = true
+                            v133.Color = v124
+                            v133.PointA = v131 + Vector2.new(- v130.Y, v130.X) * v132
+                            v133.PointB = v131 + Vector2.new(v130.Y, - v130.X) * v132
+                            v133.PointC = v129.To
+                            table.insert(vu113, v129)
+                            table.insert(vu113, v133)
+                        end
+                    end
+                end
+            end
+        end)
+    else
+        if vu112.update then
+            vu112.update:Disconnect()
+            vu112.update = nil
+        end
+        local v134, v135, v136 = ipairs(vu113)
+        while true do
+            local v137
+            v136, v137 = v134(v135, v136)
+            if v136 == nil then
+                break
+            end
+            if v137 then
+                v137:Remove()
+            end
+        end
+        vu113 = {}
+    end
+end)
+local vu138 = {
+    AlarmTrap = true,
+    AlarmTrapAlt = true,
+    BigTrap = true,
+    BlackHoleTrap = true,
+    BlackHoleTrapAlt = true,
+    ConcoctionTrap = true,
+    CrawlTrap = true,
+    CrawlTrapAlt = true,
+    DefaultTrap = true,
+    EggTrap = true,
+    EggTrapAlt = true,
+    InflatableTrap = true,
+    MouseTrap = true,
+    MouseTrapAlt = true,
+    SlowTrap = true,
+    SlowTrapAlt = true,
+    SmallTrap = true,
+    SnowpiggyTrap = true,
+    SnowpiggyTrapAlt = true,
+    TeleportTrap = true,
+    TeleportTrapAlt = true,
+    TombstoneTrap = true
+}
+local vu139 = nil
+local vu140 = false
+local vu141 = {}
+v5.Game:AddToggle("TrapESP", {
+    Title = "Trap ESP",
+    Default = false,
+    Callback = function(p142)
+        vu140 = p142
+        if not p142 then
+            local v143, v144, v145 = pairs(vu141)
+            while true do
+                local vu146
+                v145, vu146 = v143(v144, v145)
+                if v145 == nil then
+                    break
+                end
+                if vu146 and vu146.Destroy then
+                    pcall(function()
+                        vu146:Destroy()
+                    end)
+                end
+            end
+            vu141 = {}
+        end
+    end
+})
+task.spawn(function()
+    while true do
+        if true then
+            local vu147 = false
+            local function v148()
+                vu147 = true
+            end
+            task.wait(2)
+            if not vu140 then
+            end
+        end
+        if not vu139 then
+            break
+        end
+        if vu139 then
+            while vu140 and vu139 do
+                task.wait(1)
+                local v149, v150, v151 = pairs(vu141)
+                while true do
+                    local vu152
+                    v151, vu152 = v149(v150, v151)
+                    if v151 == nil then
+                        break
+                    end
+                    if vu152 and vu152.Destroy then
+                        pcall(function()
+                            vu152:Destroy()
+                        end)
+                    end
+                end
+                vu141 = {}
+                local v153 = vu139
+                local v154, v155, v156 = ipairs(v153:GetChildren())
+                while true do
+                    local v157
+                    v156, v157 = v154(v155, v156)
+                    if v156 == nil then
+                        break
+                    end
+                    if vu138[v157.Name] and v157:IsA("BasePart") or v157:IsA("Model") then
+                        local v158
+                        if v157:IsA("Model") then
+                            v158 = v157:FindFirstChildWhichIsA("BasePart") or v157
+                        else
+                            v158 = v157
+                        end
+                        if v158 then
+                            local v159 = Instance.new("Highlight")
+                            v159.Adornee = v157
+                            v159.FillColor = Color3.fromRGB(0, 170, 255)
+                            v159.OutlineColor = Color3.new(1, 1, 1)
+                            v159.FillTransparency = 0.5
+                            v159.OutlineTransparency = 0
+                            v159.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                            v159.Parent = v158
+                            table.insert(vu141, v159)
+                        end
+                    end
+                end
+            end
+        end
+        if vu147 then
+            return
+        end
+    end
+    local v160, v161, v162 = ipairs(workspace:GetChildren())
+    while true do
+        if true then
+            if false then
+            end
+        end
+        local v163
+        v162, v163 = v160(v161, v162)
+        if v162 == nil then
+        end
+        if v163:IsA("Folder") then
+            local v164, v165, v166 = ipairs(v163:GetChildren())
+            while true do
+                local v167
+                v166, v167 = v164(v165, v166)
+                if v166 == nil then
+                    break
+                end
+                if vu138[v167.Name] then
+                    vu139 = v163
+                    break
+                end
+            end
+        end
+        if vu139 then
+            v148()
+        end
+    end
+end)
+local vu168 = false
+local vu169 = {}
+local vu170 = {}
+local vu171 = {}
+local vu172 = game.Players.LocalPlayer
+v5.Game:AddToggle("ItemsESP", {
+    Title = "[OP] Items ESP",
+    Default = false,
+    Callback = function(p173)
+        vu168 = p173
+        local function vu178(p174)
+            local v175 = p174:GetFullName()
+            local v176 = # p174:GetChildren()
+            local v177 = p174:IsA("Model") and p174.PrimaryPart and tostring(p174.PrimaryPart.Position) or tostring(p174.Position)
+            return v175 .. "-" .. tostring(v176) .. "-" .. v177
+        end
+        local function vu187()
+            local v179 = workspace:GetDescendants()
+            local v180, v181, v182 = ipairs(v179)
+            local v183 = {}
+            while true do
+                local v184
+                v182, v184 = v180(v181, v182)
+                if v182 == nil then
+                    break
+                end
+                local v185 = v184.Name == "ItemPickupScript" or v184.Name == "NewItemPickupScript"
+                local v186 = v184.Parent
+                if v185 and (v186 and (v186:FindFirstChild("ClickDetector") or v186:FindFirstChildOfClass("ProximityPrompt"))) then
+                    v183[vu178(v186)] = v186
+                end
+            end
+            return v183
+        end
+        local function vu194(p188)
+            if p188:IsA("BasePart") then
+                return p188.Color
+            end
+            if p188:IsA("Model") then
+                if p188.PrimaryPart then
+                    return p188.PrimaryPart.Color
+                end
+                local v189, v190, v191 = ipairs(p188:GetDescendants())
+                local v192 = nil
+                while true do
+                    local v193
+                    v191, v193 = v189(v190, v191)
+                    if v191 == nil then
+                        break
+                    end
+                    if v193:IsA("BasePart") and (not v192 or v193.Size.Magnitude > v192.Size.Magnitude) then
+                        v192 = v193
+                    end
+                end
+                if v192 then
+                    return v192.Color
+                end
+            end
+            return BrickColor.White().Color
+        end
+        local function vu198(p195)
+            local v196 = Instance.new("BillboardGui")
+            v196.Name = "ItemBillboard"
+            v196.AlwaysOnTop = true
+            v196.Size = UDim2.new(0, 100, 0, 30)
+            v196.StudsOffset = Vector3.new(0, 3, 0)
+            v196.Adornee = p195
+            v196.Parent = p195
+            local v197 = Instance.new("TextLabel", v196)
+            v197.Size = UDim2.new(1, 0, 1, 0)
+            v197.BackgroundTransparency = 1
+            v197.TextColor3 = BrickColor.White().Color
+            v197.TextStrokeTransparency = 0.5
+            v197.TextScaled = true
+            v197.Font = Enum.Font.SourceSansBold
+            v197.Name = "InfoLabel"
+            v197.Text = "Item"
+            return v196
+        end
+        if vu168 then
+            task.spawn(function()
+                while vu168 do
+                    local v199 = vu187()
+                    local v200, v201, v202 = pairs(vu169)
+                    while true do
+                        local v203
+                        v202, v203 = v200(v201, v202)
+                        if v202 == nil then
+                            break
+                        end
+                        if not v199[v202] then
+                            if v203 then
+                                v203:Destroy()
+                            end
+                            if vu171[v202] then
+                                vu171[v202]:Destroy()
+                            end
+                            vu169[v202] = nil
+                            vu171[v202] = nil
+                            vu170[v202] = nil
+                        end
+                    end
+                    local v204, v205, v206 = pairs(v199)
+                    while true do
+                        local v207
+                        v206, v207 = v204(v205, v206)
+                        if v206 == nil then
+                            break
+                        end
+                        if not vu169[v206] then
+                            local v208 = vu194(v207)
+                            local v209 = Instance.new("Highlight")
+                            v209.FillColor = v208
+                            v209.OutlineColor = v208
+                            v209.FillTransparency = 0.3
+                            v209.OutlineTransparency = 0
+                            v209.Adornee = v207
+                            v209.Parent = v207
+                            vu169[v206] = v209
+                            vu170[v206] = v207
+                            vu171[v206] = vu198(v207)
+                        end
+                    end
+                    local v210, v211, v212 = pairs(vu171)
+                    while true do
+                        local v213
+                        v212, v213 = v210(v211, v212)
+                        if v212 == nil then
+                            break
+                        end
+                        local v214 = vu170[v212]
+                        if v214 and (v213 and (v213:FindFirstChild("InfoLabel") and vu172.Character)) and vu172.Character:FindFirstChild("HumanoidRootPart") then
+                            local v215 = math.floor((v214.Position - vu172.Character.HumanoidRootPart.Position).Magnitude)
+                            v213.InfoLabel.Text = v214.Name .. " [" .. v215 .. "m]"
+                        end
+                    end
+                    task.wait(2)
+                end
+                local v216, v217, v218 = pairs(vu169)
+                while true do
+                    local v219
+                    v218, v219 = v216(v217, v218)
+                    if v218 == nil then
+                        break
+                    end
+                    v219:Destroy()
+                end
+                local v220, v221, v222 = pairs(vu171)
+                while true do
+                    local v223
+                    v222, v223 = v220(v221, v222)
+                    if v222 == nil then
+                        break
+                    end
+                    v223:Destroy()
+                end
+                vu169 = {}
+                vu171 = {}
+                vu170 = {}
+            end)
+        else
+            local v224, v225, v226 = pairs(vu169)
+            while true do
+                local v227
+                v226, v227 = v224(v225, v226)
+                if v226 == nil then
+                    break
+                end
+                v227:Destroy()
+            end
+            local v228, v229, v230 = pairs(vu171)
+            while true do
+                local v231
+                v230, v231 = v228(v229, v230)
+                if v230 == nil then
+                    break
+                end
+                v231:Destroy()
+            end
+            vu169 = {}
+            vu171 = {}
+            vu170 = {}
+        end
+    end
+})
+local vu232 = {
+    v2 = false,
+    v1 = false,
+    classic = false
+}
+v5.ItemsGrabber:AddParagraph({
+    Title = "Information",
+    Icon = "info",
+    Content = "If you use the Item Grabber in your own Build Mode, keep in mind that it may not work correctly during the first round. Starting from the second round, it starts working correctly."
+})
+v5.ItemsGrabber:AddButton({
+    Title = "[BEST] Items Grabber v2",
+    Description = "The best universal version.",
+    Callback = function()
+        if vu232.v2 then
+            vu1:Notify({
+                Title = "Already Executed",
+                Content = "You have already executed this version.",
+                Duration = 5
+            })
+        else
+            vu232.v2 = true
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/StarHackScripts/StarHack-Hub-Deepstar-Hub/refs/heads/main/PiggyItemsGrabber-v2.txt"))()
+        end
+    end
+})
+v5.ItemsGrabber:AddButton({
+    Title = "Old Items Grabber v1",
+    Description = "It has worse performance and doesn\'t work well in Build Mode.",
+    Callback = function()
+        if vu232.v1 then
+            vu1:Notify({
+                Title = "Already Executed",
+                Content = "You have already executed this version.",
+                Duration = 5
+            })
+        else
+            vu232.v1 = true
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/StarHackScripts/StarHack-Hub-Deepstar-Hub/refs/heads/main/StarHack%20Hub%20-%20Piggy"))()
+        end
+    end
+})
+v5.ItemsGrabber:AddButton({
+    Title = "Classic Items Grabber",
+    Description = "It has worse performance and doesn\'t work on book 2.",
+    Callback = function()
+        if vu232.classic then
+            vu1:Notify({
+                Title = "Already Executed",
+                Content = "You have already executed this version.",
+                Duration = 5
+            })
+        else
+            vu232.classic = true
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/StarHackScripts/StarHack-Hub-Deepstar-Hub/refs/heads/main/PiggyBuildModeService"))()
+        end
+    end
+})
+local vu233 = game:GetService("Players")
+local vu234 = vu233.LocalPlayer
+local vu235 = game:GetService("RunService")
+local vu236 = nil
+local function vu243()
+    local v237 = vu233
+    local v238, v239, v240 = ipairs(v237:GetPlayers())
+    local v241 = {}
+    while true do
+        local v242
+        v240, v242 = v238(v239, v240)
+        if v240 == nil then
+            break
+        end
+        if v242 ~= vu234 then
+            table.insert(v241, v242.DisplayName .. " (@" .. v242.Name .. ")")
+        end
+    end
+    return v241
+end
+task.spawn(function()
+    while true do
+        repeat
+            task.wait(5)
+        until vu236
+        vu236:RefreshValues((vu243()))
+    end
+end)
+local vu244 = nil
+local function vu251()
+    local v245 = vu233
+    local v246, v247, v248 = ipairs(v245:GetPlayers())
+    local v249 = {}
+    while true do
+        local v250
+        v248, v250 = v246(v247, v248)
+        if v248 == nil then
+            break
+        end
+        if v250 ~= vu234 then
+            table.insert(v249, v250.DisplayName .. " (@" .. v250.Name .. ")")
+        end
+    end
+    return v249
+end
+v5.Killer:AddDropdown("PlayerDropdown", {
+    Title = "Choose a player",
+    Values = vu251(),
+    Multi = false,
+    Default = nil,
+    Callback = function(p252)
+        vu244 = vu233:FindFirstChild((p252:match("%(@(.-)%)")))
+        if vu244 then
+            vu1:Notify({
+                Title = "Target selected",
+                Content = "Now targeting: " .. vu244.DisplayName,
+                Duration = 4
+            })
+        end
+    end
+})
+task.spawn(function()
+    while true do
+        repeat
+            task.wait(5)
+            local v253 = vu6.PlayerDropdown
+        until v253 and v253.SetValues
+        v253:SetValues(vu251())
+    end
+end)
+v5.Killer:AddButton({
+    Title = "Teleport to Target",
+    Description = "Teleports you directly to the selected player\'s position.",
+    Callback = function()
+        if vu244 and vu244.Character and vu244.Character:FindFirstChild("HumanoidRootPart") then
+            local v254 = vu244.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, - 1)
+            vu234.Character:PivotTo(v254)
+        else
+            vu1:Notify({
+                Title = "Error",
+                Content = "No target selected or character missing.",
+                Duration = 4
+            })
+        end
+    end
+})
+local vu255 = nil
+local vu256 = nil
+local vu257 = false
+v5.Killer:AddToggle("FollowToggle", {
+    Title = "Bang Target",
+    Default = false
+})
+vu6.FollowToggle:OnChanged(function(p258)
+    if vu257 then
+        if p258 then
+            if vu244 and vu244.Character and vu244.Character:FindFirstChild("HumanoidRootPart") then
+                local v259 = vu234.Character
+                if v259 then
+                    v259 = vu234.Character:FindFirstChild("HumanoidRootPart")
+                end
+                if v259 then
+                    vu256 = v259.CFrame
+                    vu255 = vu235.RenderStepped:Connect(function()
+                        if vu244 and vu244.Character and vu244.Character:FindFirstChild("HumanoidRootPart") then
+                            local v260 = vu244.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, - 1)
+                            vu234.Character:PivotTo(v260)
+                        end
+                    end)
+                    vu1:Notify({
+                        Title = "Following",
+                        Content = "Now banging: " .. vu244.DisplayName,
+                        Duration = 4
+                    })
+                else
+                    vu1:Notify({
+                        Title = "Error",
+                        Content = "Could not find your character\'s position.",
+                        Duration = 4
+                    })
+                end
+            else
+                vu1:Notify({
+                    Title = "Error",
+                    Content = "No valid target selected.",
+                    Duration = 4
+                })
+                vu6.FollowToggle:Set(false)
+            end
+        else
+            if vu255 then
+                vu255:Disconnect()
+                vu255 = nil
+            end
+            if vu256 then
+                vu234.Character:PivotTo(vu256)
+                vu1:Notify({
+                    Title = "Returned",
+                    Content = "You returned to your original position.",
+                    Duration = 4
+                })
+            else
+                vu1:Notify({
+                    Title = "Warning",
+                    Content = "No saved position found.",
+                    Duration = 4
+                })
+            end
+        end
+    else
+        vu257 = true
+    end
+end)
+local vu261 = nil
+local vu262 = false
+v5.Killer:AddToggle("BangToggle", {
+    Title = "Follow Target (Realistic)",
+    Default = false
+})
+vu6.BangToggle:OnChanged(function(p263)
+    if vu262 then
+        if p263 then
+            if vu244 and vu244.Character and vu244.Character:FindFirstChild("HumanoidRootPart") then
+                local vu264 = vu234.Character
+                local vu265
+                if vu264 then
+                    vu265 = vu264:FindFirstChildOfClass("Humanoid")
+                else
+                    vu265 = vu264
+                end
+                if not vu265 then
+                    vu1:Notify({
+                        Title = "Error",
+                        Content = "Your character\'s humanoid is missing.",
+                        Duration = 4
+                    })
+                    vu6.BangToggle:Set(false)
+                    return
+                end
+                vu261 = vu235.RenderStepped:Connect(function()
+                    if vu244 and vu244.Character and vu244.Character:FindFirstChild("HumanoidRootPart") then
+                        local v266 = vu244.Character.HumanoidRootPart
+                        local v267 = vu264:FindFirstChild("HumanoidRootPart")
+                        if v267 and vu265 then
+                            if (v267.Position - v266.Position).Magnitude <= 0.5 then
+                                vu265:Move(Vector3.zero, false)
+                            else
+                                vu265:MoveTo(v266.Position)
+                            end
+                        end
+                    else
+                        vu265:Move(Vector3.zero, false)
+                    end
+                end)
+                vu1:Notify({
+                    Title = "Follow Activated",
+                    Content = "Walking towards: " .. vu244.DisplayName,
+                    Duration = 4
+                })
+            else
+                vu1:Notify({
+                    Title = "Error",
+                    Content = "No valid target selected.",
+                    Duration = 4
+                })
+                vu6.BangToggle:Set(false)
+            end
+        else
+            if vu261 then
+                vu261:Disconnect()
+                vu261 = nil
+            end
+            local v268 = vu234.Character
+            if v268 then
+                v268 = vu234.Character:FindFirstChildOfClass("Humanoid")
+            end
+            if v268 then
+                v268:Move(Vector3.zero, false)
+            end
+            vu1:Notify({
+                Title = "Follow Deactivated",
+                Content = "You can now walk freely.",
+                Duration = 4
+            })
+        end
+    else
+        vu262 = true
+    end
+end)
+vu233.PlayerRemoving:Connect(function(p269)
+    if vu244 == p269 then
+        vu1:Notify({
+            Title = "Target Left",
+            Content = "Your target left from the game.",
+            Duration = 5
+        })
+        vu244 = nil
+    end
+end)
+v5.Update:AddParagraph({
+    Title = "BRAND NEW VERSION 2.0",
+    Icon = "hammer",
+    Content = "\n[+]: New Traitor ESP (white)\n[+]: New \'Game\' section with new features\n[+]: New Trace ESP\n[+]: New Trap ESP (OP)\n[+]: New Items ESP (OP)\n[+]: \'Target Kill\' section completely remastered\n[+]: Added Bang, Teleport, Follow and more features for killing (OP)\n[+]: \'Main\' Section completely remastered\n[+]: Added Anti-Slow feature\n[+]: Noclip Improved\n[+]: New \'Update\' section\n[+++]: Now it\'s time for you to discover everything else! :D\n"
+})
+v5.Update:AddParagraph({
+    Title = "Thank you for all your support! :D",
+    Icon = "gift",
+    Content = "ALL NEW FEATURES AND FUTURE UPDATES WILL BE ANNOUNCED AT MY DISCORD SERVER"
+})
+v5.Credits:AddParagraph({
+    Title = "Made by:",
+    Icon = "star",
+    Content = "StarHackScripts"
+})
+v5.Credits:AddButton({
+    Title = "Copy YouTube",
+    Description = "Copy my YouTube link to clipboard",
+    Callback = function()
+        setclipboard("https://youtube.com/@starhackscripts?si=qqHtv2ueBDjzlA7M")
+        vu1:Notify({
+            Title = "YouTube Link Copied",
+            Content = "See you in my videos, pookie!",
+            Duration = 7
+        })
+    end
+})
+v5.Credits:AddButton({
+    Title = "Copy Discord",
+    Description = "Copy my Discord invite to clipboard",
+    Callback = function()
+        setclipboard("https://discord.com/invite/WTu5Eny3qZ")
+        vu1:Notify({
+            Title = "Discord Invite Copied",
+            Content = "Welcome to the team! We\'ll talk together if you like!",
+            Duration = 7
+        })
+    end
+})
+local vu270 = {}
+local vu271 = false
+local vu272 = false
+local vu273 = true
+v5.Settings:AddButton({
+    Title = "DON\'T CLICK ME",
+    Description = "???",
+    Callback = function()
+        if vu271 or vu272 then
+            vu1:Notify({
+                Title = "???",
+                Content = "Nope, you can\'t...",
+                Duration = 5
+            })
+        else
+            vu271 = true
+            local v274
+            if vu273 then
+                vu273 = false
+                vu1:Notify({
+                    Title = "???",
+                    Content = "Look at your face... You\'re turning into him... You have disappointed me.",
+                    Duration = 20
+                })
+                v274 = {
+                    {
+                        imageId = "rbxassetid://125039877065380",
+                        soundIds = {
+                            "rbxassetid://5710016194"
+                        },
+                        duration = 10,
+                        extraSoundAfter = 3,
+                        extraSoundId = "115148092308561"
+                    },
+                    {
+                        imageId = "rbxassetid://15835964289",
+                        soundIds = {
+                            "rbxassetid://9043360237",
+                            "rbxassetid://9080161598"
+                        },
+                        duration = 100
+                    },
+                    {
+                        imageId = "rbxassetid://18946427139",
+                        soundIds = {
+                            {
+                                id = "rbxassetid://82212266751032",
+                                pitch = 0.9
+                            }
+                        },
+                        duration = 5
+                    },
+                    {
+                        imageId = "rbxassetid://6986070429",
+                        soundIds = {
+                            {
+                                id = "rbxassetid://7236490488",
+                                pitch = 1
+                            },
+                            {
+                                id = "rbxassetid://7255999109",
+                                pitch = 1,
+                                delayAfter = true
+                            }
+                        },
+                        duration = 33
+                    }
+                }
+            else
+                v274 = {
+                    {
+                        imageId = "rbxassetid://125039877065380",
+                        soundIds = {
+                            "rbxassetid://5710016194"
+                        },
+                        duration = 10,
+                        extraSoundAfter = 3,
+                        extraSoundId = "115148092308561"
+                    },
+                    {
+                        imageId = "rbxassetid://15835964289",
+                        soundIds = {
+                            "rbxassetid://9043360237",
+                            "rbxassetid://9080161598"
+                        },
+                        duration = 100
+                    },
+                    {
+                        imageId = "rbxassetid://18946427139",
+                        soundIds = {
+                            {
+                                id = "rbxassetid://82212266751032",
+                                pitch = 0.9
+                            }
+                        },
+                        duration = 5
+                    },
+                    {
+                        imageId = "rbxassetid://6986070429",
+                        soundIds = {
+                            {
+                                id = "rbxassetid://7236490488",
+                                pitch = 1
+                            },
+                            {
+                                id = "rbxassetid://7255999109",
+                                pitch = 1,
+                                delayAfter = true
+                            }
+                        },
+                        duration = 33
+                    }
+                }
+            end
+            repeat
+                local v275 = math.random(1, # v274)
+            until not table.find(vu270, v275)
+            table.insert(vu270, v275)
+            if # vu270 > 3 then
+                table.remove(vu270, 1)
+            end
+            local vu276 = v274[v275]
+            local vu277 = vu234.Character or vu234.CharacterAdded:Wait()
+            local vu278 = vu277:FindFirstChild("Head")
+            vu277:FindFirstChildOfClass("Humanoid")
+            local vu279 = vu277:FindFirstChildOfClass("Shirt")
+            local vu280 = vu277:FindFirstChildOfClass("Pants")
+            local v281 = vu277:FindFirstChildOfClass("ShirtGraphic")
+            local v282, v283, v284 = ipairs(vu277:GetDescendants())
+            local vu285 = {}
+            while true do
+                local v286
+                v284, v286 = v282(v283, v284)
+                if v284 == nil then
+                    break
+                end
+                if v286:IsA("BasePart") and v286.Name ~= "HumanoidRootPart" then
+                    vu285[v286] = v286.Color
+                    v286.Color = Color3.new(0, 0, 0)
+                end
+            end
+            if vu279 then
+                vu279.Parent = nil
+            end
+            if vu280 then
+                vu280.Parent = nil
+            end
+            if v281 then
+                v281:Destroy()
+            end
+            local vu287 = Instance.new("Decal")
+            vu287.Name = "Face"
+            vu287.Texture = vu276.imageId
+            vu287.Face = Enum.NormalId.Front
+            vu287.Parent = vu278
+            local v288, v289, v290 = ipairs(vu276.soundIds)
+            while true do
+                local v291
+                v290, v291 = v288(v289, v290)
+                if v290 == nil then
+                    break
+                end
+                local v292 = Instance.new("Sound", vu278)
+                local v293
+                if typeof(v291) ~= "string" or not v291 then
+                    v293 = v291.id
+                else
+                    v293 = v291
+                end
+                v292.SoundId = v293
+                v292.PlaybackSpeed = typeof(v291) ~= "table" and 1 or (v291.pitch or 1)
+                v292:Play()
+                if v291.delayAfter then
+                    task.wait(1)
+                end
+            end
+            if vu276.extraSoundId then
+                task.delay(vu276.extraSoundAfter or 1, function()
+                    local v294 = Instance.new("Sound", vu278)
+                    v294.SoundId = "rbxassetid://" .. vu276.extraSoundId
+                    v294:Play()
+                end)
+            end
+            task.delay(vu276.duration, function()
+                vu271 = false
+                vu287:Destroy()
+                local v295, v296, v297 = pairs(vu285)
+                while true do
+                    local v298
+                    v297, v298 = v295(v296, v297)
+                    if v297 == nil then
+                        break
+                    end
+                    if v297 then
+                        v297.Color = v298
+                    end
+                end
+                if vu279 then
+                    vu279.Parent = vu277
+                end
+                if vu280 then
+                    vu280.Parent = vu277
+                end
+            end)
+        end
+    end
+})
